@@ -7,8 +7,7 @@ public class Harvest : MonoBehaviour
 
     private Dictionary<FarmLand, int> harvestProgress = new Dictionary<FarmLand, int>(); // 存储每块农田的收获进度
 
-    // 目标类，存储每种作物的收获量
-    public Foodtobeprocessed Foodtobeprocessed;
+    public Target Target;
 
     public CursorManager cursor;
 
@@ -47,12 +46,7 @@ public class Harvest : MonoBehaviour
 
      void Awake()
 {
-    Foodtobeprocessed = FindObjectOfType<Foodtobeprocessed>();
 
-    if (Foodtobeprocessed == null)
-    {
-        Debug.LogWarning("Foodtobeprocessed 组件未找到！请检查场景中是否有它。");
-    }
 }
 
 
@@ -76,16 +70,16 @@ public class Harvest : MonoBehaviour
                         switch (clickedFarmLand.SeedKind)
                         {
                             case 0:
-                                Foodtobeprocessed.Yield0 += clickedFarmLand.Yield;  // 种子0的产量
+                                Target.Yield0 += clickedFarmLand.Yield;  // 种子0的产量
                                 break;
                             case 1:
-                                Foodtobeprocessed.Yield1 += clickedFarmLand.Yield;  // 种子1的产量
+                                Target.Yield1 += clickedFarmLand.Yield;  // 种子1的产量
                                 break;
                             case 2:
-                                Foodtobeprocessed.Yield2 += clickedFarmLand.Yield;  // 种子2的产量
+                                Target.Yield2 += clickedFarmLand.Yield;  // 种子2的产量
                                 break;
                             case 3:
-                                Foodtobeprocessed.Yield3 += clickedFarmLand.Yield;  // 种子3的产量
+                                Target.Yield3 += clickedFarmLand.Yield;  // 种子3的产量
                                 break;
                         }
 

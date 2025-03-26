@@ -17,7 +17,6 @@ public class PlowButtonControl : MonoBehaviour
         {
             if (farmland.Status == (int)FarmLand.FarmLandStatus.NeedCultivate)
             {
-                farmland.UpdateHighlight(shouldHighlight);
             }
         }
 

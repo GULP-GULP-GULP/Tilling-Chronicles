@@ -10,7 +10,7 @@ public class Growing : MonoBehaviour
     public Sow2 sow2;  // 种子组件 2
     public Sow3 sow3;  // 种子组件 3
 
-    private float growProgress = 0f;  // 当前生长进度
+    public float growProgress = -1f;  // 当前生长进度
 
     // 初始化，获取农田组件和种子组件
     void Start()
@@ -37,30 +37,33 @@ public class Growing : MonoBehaviour
             switch (SeedKind)
             {
                 case 0:
-                    growTime = sow0.GrowTimeNeed;  // 获取生长时间
+                    growTime = sow0.GrowTimeNeed - 1;  // 获取生长时间
                     break;
 
                 case 1:
-                    growTime = sow1.GrowTimeNeed;  // 获取生长时间
+                    growTime = sow1.GrowTimeNeed - 1;  // 获取生长时间
                     break;
 
                 case 2:
-                    growTime = sow2.GrowTimeNeed;  // 获取生长时间
+                    growTime = sow2.GrowTimeNeed - 1;  // 获取生长时间
                     break;
 
                 case 3:
-                    growTime = sow3.GrowTimeNeed;  // 获取生长时间
+                    growTime = sow3.GrowTimeNeed - 1;  // 获取生长时间
                     break;
             }
 
             // 增加生长进度
-            growProgress += Time.deltaTime;
+            if(farmland.NeedIrrigate==false)
+            {
+                growProgress += Time.deltaTime;
+            }
 
             // 如果生长进度达到所需时间，农田生长完成
             if (growProgress >= growTime)
             {
                 farmland.Transition((int)FarmLand.FarmLandStatus.NeedHarvest);  // 更新农田状态为“需要收获”
-                growProgress = 0f;  // 重置生长进度，准备下一轮生长
+                growProgress = -1f;  // 重置生长进度，准备下一轮生长
                 Debug.Log("Growing completed!");
             }
         }

@@ -9,7 +9,6 @@ public class WindmillControl : MonoBehaviour
     public float rotationSpeed = 200f; // 风车旋转速度
     public Animator windmillAnimator;  // 风车动画
     public IrrigationControl IrrigationControl;  // 关联的灌溉系统
-    public IrrigationManager irrigations;
 
 
     private bool isRotating = false; // 旋转状态
@@ -46,7 +45,7 @@ public class WindmillControl : MonoBehaviour
             windmillAnimator.SetBool("IsRotating", true);
         }
         IrrigationControl.Irrigation(); // 开始灌溉
-        irrigations.Status = true;
+        IrrigationControl.Status = true;
     }
 
     private void StopRotation()
@@ -55,7 +54,7 @@ public class WindmillControl : MonoBehaviour
         if (windmillAnimator != null)
         {
             windmillAnimator.SetBool("IsRotating", false);
-            irrigations.Status = false;
+            IrrigationControl.Status = false;
         }
     }
 

@@ -7,7 +7,7 @@ public class FarmLand : MonoBehaviour
     public int Status;  // 当前农田状态
     public int Yield;  // 农田产量
     public int SeedKind = -1; // 当前种子种类
-    public GameObject highlightOverlay;
+    public bool NeedIrrigate = true;   // 需要灌溉
 
     private Collider itemCollider;
 
@@ -23,9 +23,8 @@ public class FarmLand : MonoBehaviour
     {
         NeedCultivate = 0,  // 需要开垦
         NeedSow = 1,        // 需要播种
-        NeedIrrigate = 2,   // 需要灌溉
-        Growing = 3,        // 正在生长
-        NeedHarvest = 4     // 需要收获
+        Growing = 2,        // 正在生长
+        NeedHarvest = 3     // 需要收获
     }
 
     public enum SeedKinds
@@ -59,10 +58,6 @@ public class FarmLand : MonoBehaviour
     // 视觉效果恢复正常
     }
 
-    public void UpdateHighlight(bool isActive)
-    {
-        highlightOverlay.SetActive(isActive);
-    }
 
 
     // Start is called before the first frame update
@@ -70,7 +65,6 @@ public class FarmLand : MonoBehaviour
     {
         Status = (int)FarmLandStatus.NeedCultivate;  // 初始化状态为需要开垦
         itemCollider = GetComponent<Collider>();
-        highlightOverlay.SetActive(false);
     }
 
     // Update is called once per frame

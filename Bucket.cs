@@ -40,16 +40,7 @@ public class Bucket : MonoBehaviour
         FarmLand farmLand = farmLandObj.GetComponent<FarmLand>();
         if (farmLand != null && hasWater)
         {
-            if (farmLand.Status == (int)FarmLand.FarmLandStatus.NeedIrrigate)
-            {
-                farmLand.Transition((int)FarmLand.FarmLandStatus.Growing); // 变为可种植状态
-                hasWater = false;
-                Debug.Log("成功灌溉农田！");
-            }
-            else
-            {
-                Debug.Log("这个农田不需要水！");
-            }
+            farmLand.NeedIrrigate = false;
         }
     }
 }

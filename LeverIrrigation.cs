@@ -1,17 +1,20 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class LeverIrrigation : MonoBehaviour
 {
     public Animator leverAnimator;  // 桔槔的动画控制器
-    public IrrigationControl IrrigationControl;   // 关联的灌溉系统
-    private bool isAnimating = false; // 是否正在播放动画
+    public List<IrrigationControl> irrigationControls = new List<IrrigationControl>(); // 关联的灌溉系统列表
+    public bool isAnimating = false; // 是否正在播放动画
+    public int Duration = 0;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 鼠标左键点击
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (!isAnimating && IsMouseOverLever(mousePosition)) // 只在未播放动画时触发
+
+            if (!isAnimating && IsMouseOverLever(mousePosition))
             {
                 StartLeverAnimation();
             }
@@ -21,16 +24,16 @@ public class LeverIrrigation : MonoBehaviour
     private void StartLeverAnimation()
     {
         isAnimating = true;
-        if (leverAnimator != null)
-        {
-            leverAnimator.SetTrigger("StartLever"); // 触发动画
-        }
+        leverAnimator.SetTrigger("StartLever"); // 触发动画
     }
 
     // **动画结束后调用（在动画结束时的Event里触发）**
     public void OnLeverAnimationComplete()
     {
-        IrrigationControl.Irrigation(); // 开始灌溉
+        foreach (var irrigationControl in irrigationControls)
+        {
+            irrigationControl.Irrigation(); // 开始灌溉
+        }
         isAnimating = false; // 允许再次点击
     }
 
@@ -39,10 +42,5 @@ public class LeverIrrigation : MonoBehaviour
     {
         Collider2D collider = GetComponent<Collider2D>();
         return collider.OverlapPoint(mousePosition);
-    }
-
-    void Awaken()
-    {
-        IrrigationControl.IrrigationDuration = 2;
     }
 }

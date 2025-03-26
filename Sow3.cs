@@ -9,7 +9,6 @@ public class Sow3 : MonoBehaviour
     public int Yield = 10;  // 产量
     public int GrowTimeNeed = 10; // 生长时间
     public int Cost = 100;
-    private Economy economy;
 
     public CursorManager cursor;
 
@@ -82,7 +81,7 @@ public class Sow3 : MonoBehaviour
                 if (clickedFarmLand != null && clickedFarmLand.Status == (int)FarmLand.FarmLandStatus.NeedSow)
                 {
                     // 播种：直接完成播种，更新状态为 NeedIrrigate
-                    if (HandleProgressUpdate(clickedFarmLand, ref sowProgress, (int)FarmLand.FarmLandStatus.NeedIrrigate))
+                    if (HandleProgressUpdate(clickedFarmLand, ref sowProgress, (int)FarmLand.FarmLandStatus.Growing))
                     {
 
                         // 播种后更新UI

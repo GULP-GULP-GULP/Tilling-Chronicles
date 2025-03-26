@@ -1,11 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class IrrigationControl : MonoBehaviour
 {
-    public int IrrigationDuration = 5;    // **灌溉后维持的时间**
+    public int IrrigationDuration = 10;    // **灌溉后维持的时间**
     
-    public IrrigationManager irrigations;
+    public GameObject River;  
+
+    public bool Status = false;
+
+    public List<FarmLand> farmLands;
 
     // **激活灌溉功能**
     public void Irrigation()
@@ -20,15 +25,32 @@ public class IrrigationControl : MonoBehaviour
         // **等待灌溉时间**
 
         // **更新状态为灌溉**
-        irrigations.Status = true;
-        Debug.Log("Water Wheel Irrigated!");
+        Status = true;
+        River.SetActive(true);
+        Debug.Log("Star Irrigated!");
 
         // **灌溉持续一段时间**
         yield return new WaitForSeconds(IrrigationDuration);
 
         // **时间到，恢复未灌溉状态**
-        irrigations.Status = false;
+        Status = false;
+        River.SetActive(false);
         Debug.Log("Irrigation ended.");
+    }
+
+    void Update()
+    {
+        foreach (var farmland in farmLands)
+        {
+            if(Status==true)
+            {
+                farmland.NeedIrrigate = false;
+            }
+            else
+            {
+                farmland.NeedIrrigate = true;
+            }
+        }
     }
 
 }
